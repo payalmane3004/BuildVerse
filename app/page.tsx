@@ -4,8 +4,7 @@ import Stats from "@/components/Stats";
 import Features from "@/components/Features";
 import Howitworks from "@/components/Howitworks";
 import Footer from "@/components/Footer";
-
-
+import CTV from "@/components/CTV";
 
 export default function Home() {
   return (
@@ -15,6 +14,7 @@ export default function Home() {
       <Stats />
       <Features />
       <Howitworks/>
+      <CTV />
       <Footer />
       
     </>
