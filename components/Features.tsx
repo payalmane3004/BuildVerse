@@ -1,5 +1,4 @@
-// import { projectShutdown } from "next/dist/build/swc/generated-native";
-// import { features } from "process";
+
 
 export default function Features() {
     const features = [
