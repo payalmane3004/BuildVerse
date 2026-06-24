@@ -110,7 +110,7 @@ export default function Academicinfo() {
     ← Back
   </button>
 
-  <button
+  <button onClick={() => router.push("/signup/skills")}
     className="
       px-6
       py-2
