@@ -22,9 +22,10 @@ export default function Signup() {
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
         </div>
           <p className="text-blue-400 uppercase tracking-widest text-sm">
-          Step 1 of 4
+          Step 1 of 5
         </p>
 
           <h1 className="text-4xl font-bold">

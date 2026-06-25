@@ -20,6 +20,7 @@ export default function Profinfo() {
         <div className="flex justify-end gap-2 mb-8">
           <div className="w-2 h-2 rounded-full bg-slate-500"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
           <div className="w-10 h-2 rounded-full bg-blue-600"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
         </div>

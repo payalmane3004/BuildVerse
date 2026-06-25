@@ -19,13 +19,14 @@ export default function Academicinfo() {
         <div className="w-full max-w-md  rounded-3xl backdrop-blur-md">
         
         <div className="flex justify-end gap-2 mb-8">
-          <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-          <div className="w-10 h-2 rounded-full bg-slate-600"></div>
+          <div className="w-2 h-2 rounded-full bg-slate-500"></div>
+          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          <div className="w-10 h-2 rounded-full bg-blue-600"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
           <div className="w-2 h-2 rounded-full bg-slate-600"></div>
         </div>
           <p className="text-blue-400 uppercase tracking-widest text-sm">
-          Step 2 of 4
+          Step 3 of 5
         </p>
 
           <h1 className="text-4xl font-bold">
