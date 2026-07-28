@@ -1,35 +1,41 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function Dashboard() {
+  const router = useRouter();
   const builders = [
-    {
-      initials: "PN",
-      name: "Priya Nair",
-      college: "IIT Bombay",
-      bio: "Full-stack developer passionate about building scalable web applications.",
-      skills: ["React", "Node.js", "TypeScript"],
-      cgpa: "9.1",
-      year: "3rd Year",
-    },
-    {
-      initials: "RM",
-      name: "Rohit Mehta",
-      college: "NIT Trichy",
-      bio: "AI enthusiast working on machine learning and startup ideas.",
-      skills: ["Python", "AI/ML", "Data Science"],
-      cgpa: "8.6",
-      year: "4th Year",
-    },
-    {
-      initials: "AS",
-      name: "Ananya Singh",
-      college: "BITS Pilani",
-      bio: "UI/UX designer focused on creating meaningful digital experiences.",
-      skills: ["Figma", "UI/UX", "Flutter"],
-      cgpa: "8.9",
-      year: "2nd Year",
-    },
-  ];
+  {
+    id: 1,
+    initials: "PN",
+    name: "Priya Nair",
+    college: "IIT Bombay",
+    bio: "Full-stack developer passionate about building scalable web applications.",
+    skills: ["React", "Node.js", "TypeScript"],
+    cgpa: "9.1",
+    year: "3rd Year",
+  },
+  {
+    id: 2,
+    initials: "RM",
+    name: "Rohit Mehta",
+    college: "NIT Trichy",
+    bio: "AI enthusiast working on machine learning and startup ideas.",
+    skills: ["Python", "AI/ML", "Data Science"],
+    cgpa: "8.6",
+    year: "4th Year",
+  },
+  {
+    id: 3,
+    initials: "AS",
+    name: "Ananya Singh",
+    college: "BITS Pilani",
+    bio: "UI/UX designer focused on creating meaningful digital experiences.",
+    skills: ["Figma", "UI/UX", "Flutter"],
+    cgpa: "8.9",
+    year: "2nd Year",
+  },
+];
 
   return (
     <main className="min-h-screen bg-[#020B28] text-white">
@@ -124,15 +130,20 @@ export default function Dashboard() {
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mt-5">
           {builders.map((builder) => (
             <div
-              key={builder.name}
-              className="
-                bg-slate-900/40
-                border
-                border-slate-800
-                rounded-3xl
-                p-5
-              "
-            >
+  key={builder.id}
+  onClick={() => router.push(`/builder/${builder.id}`)}
+  className="
+    bg-slate-900/40
+    border
+    border-slate-800
+    rounded-3xl
+    p-5
+    cursor-pointer
+    hover:border-blue-500
+    hover:-translate-y-1
+    transition-all
+  "
+>
               <div className="flex items-start gap-4">
                 <div
                   className="
@@ -187,19 +198,23 @@ export default function Dashboard() {
               </div>
 
               <button
-                className="
-                  w-full
-                  mt-5
-                  py-2.5
-                  rounded-2xl
-                  bg-gradient-to-r
-                  from-blue-600
-                  to-blue-400
-                  font-semibold
-                "
-              >
-                Connect
-              </button>
+  onClick={(e) => {
+    e.stopPropagation();
+    alert(`Connection request sent to ${builder.name}`);
+  }}
+  className="
+    w-full
+    mt-5
+    py-2.5
+    rounded-2xl
+    bg-gradient-to-r
+    from-blue-600
+    to-blue-400
+    font-semibold
+  "
+>
+  Connect
+</button>
             </div>
           ))}
         </div>
