@@ -1,32 +1,62 @@
 "use client";
+
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
-  return (
-    <main className="min-h-screen grid ">
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleNext = () => {
+    if (!email || !password || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    // Temporarily store signup information
+    sessionStorage.setItem(
+      "signupData",
+      JSON.stringify({
+        email,
+        password,
+      })
+    );
+
+    router.push("/signup/profinfo");
+  };
+
+  return (
+    <main className="min-h-screen grid">
 
       <section className="flex items-center justify-center p-8">
 
-            <div className="absolute top-8 left-10">
-        <h2 className="text-3xl font-bold text-blue-400">
-          BuildVerse
-        </h2>
-      </div>
-      
-        <div className="w-full max-w-md p-10 rounded-3xl border border-slate-800 bg-slate-900/40 backdrop-blur-md">
-        
-        <div className="flex justify-end gap-2 mb-8">
-          <div className="w-10 h-2 rounded-full bg-blue-500"></div>
-          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+        <div className="absolute top-8 left-10">
+          <h2 className="text-3xl font-bold text-blue-400">
+            BuildVerse
+          </h2>
         </div>
+
+        <div className="w-full max-w-md p-10 rounded-3xl border border-slate-800 bg-slate-900/40 backdrop-blur-md">
+
+          <div className="flex justify-end gap-2 mb-8">
+            <div className="w-10 h-2 rounded-full bg-blue-500"></div>
+            <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+            <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+            <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+            <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          </div>
+
           <p className="text-blue-400 uppercase tracking-widest text-sm">
-          Step 1 of 5
-        </p>
+            Step 1 of 5
+          </p>
 
           <h1 className="text-4xl font-bold">
             Create Your Account
@@ -45,6 +75,8 @@ export default function Signup() {
 
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full px-5 py-4 mt-2 rounded-2xl bg-slate-900 border border-slate-700 focus:outline-none focus:border-blue-500"
               />
@@ -57,27 +89,29 @@ export default function Signup() {
 
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full px-5 py-4 mt-2 rounded-2xl bg-slate-900 border border-slate-700 focus:outline-none focus:border-blue-500"
               />
             </div>
 
-
-              <div>
+            <div>
               <label className="text-slate-300 font-medium">
-                Password
+                Confirm Password
               </label>
 
               <input
                 type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
                 className="w-full px-5 py-4 mt-2 rounded-2xl bg-slate-900 border border-slate-700 focus:outline-none focus:border-blue-500"
               />
             </div>
-           
 
-
-            <button onClick={() => router.push("/signup/profinfo")}
+            <button
+              onClick={handleNext}
               className="
                 w-full
                 py-4
@@ -91,10 +125,11 @@ export default function Signup() {
                 transition
               "
             >
-              Sign in
+              Next →
             </button>
-            </div>
+
           </div>
+        </div>
       </section>
 
     </main>

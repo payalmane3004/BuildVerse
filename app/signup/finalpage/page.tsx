@@ -1,6 +1,7 @@
 "use client";
-
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import api from "@/lib/api";
 import {
   Code2,
   Trophy,
@@ -12,7 +13,49 @@ import {
 
 export default function Goals() {
   const router = useRouter();
+   const [loading, setLoading] = useState(false);
+   const handleFinish = async () => {
+  try {
+    setLoading(true);
 
+    const storedData = sessionStorage.getItem("signupData");
+
+    if (!storedData) {
+      alert("Signup information is missing. Please start again.");
+      router.push("/signup");
+      return;
+    }
+
+    const signupData = JSON.parse(storedData);
+
+    const response = await api.post("/auth/register", {
+      fullName: signupData.fullName,
+      email: signupData.email,
+      password: signupData.password,
+      college: signupData.college,
+      year: Number(signupData.year),
+      bio: signupData.bio,
+      skills: signupData.skills,
+    });
+
+    alert(response.data.message || "Account created successfully!");
+
+    sessionStorage.removeItem("signupData");
+
+    router.push("/login");
+
+  } catch (error: any) {
+    console.error(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Failed to create account"
+    );
+
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <main className="min-h-screen grid">
 
@@ -156,7 +199,9 @@ export default function Goals() {
             </button>
 
             <button
-              onClick={() => router.push("/dashboard")}
+            
+  onClick={handleFinish}
+  disabled={loading}
               className="
                 px-6
                 py-2
@@ -170,7 +215,7 @@ export default function Goals() {
                 transition
               "
             >
-              Finish →
+             {loading ? "Creating Account..." : "Finish →"}
             </button>
 
           </div>

@@ -21,7 +21,7 @@ export default function Features() {
             }
         ];
     return (
-       <section className = "py-20 px-8">
+       <section id="features" className="py-20 px-8">
         <h2 className = "text-4xl font-bold text-center mb-12">What You Can Do</h2>
         <div className = "grid grid-cols-2 gap-6">
         {

@@ -1,4 +1,9 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function Hero() {
+   const router = useRouter();
   return (
     <section className="flex flex-col items-center text-center py-20 px-8">
       
@@ -21,20 +26,23 @@ export default function Hero() {
       </div>
 
       <div className="flex gap-4 mt-8">
-     <button
-  className="px-6 py-3 rounded-lg text-white"
-  style={{ backgroundColor: "var(--primary)" }}
->
-  Get Started
-</button>
+    <button
+          onClick={() => router.push("/signup")}
+          className="px-6 py-3 rounded-lg text-white"
+          style={{ backgroundColor: "var(--primary)" }}
+        >
+          Get Started
+        </button>
 
-       <button
-  className="px-6 py-3 rounded-lg border"
-  style={{
-    borderColor: "var(--primary)",
-    color: "var(--primary)"
-  }}
->
+        {/* Explore Builders */}
+        <button
+          onClick={() => router.push("/signup")}
+          className="px-6 py-3 rounded-lg border"
+          style={{
+            borderColor: "var(--primary)",
+            color: "var(--primary)",
+          }}
+        >
           Explore Builders
         </button>
       </div>
