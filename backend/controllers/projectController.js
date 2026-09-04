@@ -1,4 +1,4 @@
-const { compare } = require("bcrypt");
+const { compare } = require("bcryptjs");
 const Project = require("../models/Project");
 
 const createProject = async (req, res) => {
