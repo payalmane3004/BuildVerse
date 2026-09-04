@@ -19,6 +19,12 @@ const {
 // Get all projects (supports search)
 router.get("/", getAllProjects);
 
+
+
+
+
+
+router.get("/my", protect, getMyProjects);
 // Get a single project
 router.get("/:id", getProjectById);
 
@@ -26,8 +32,7 @@ router.get("/:id", getProjectById);
 // Protected Routes
 // ==========================
 
-// Get logged-in user's projects
-router.get("/my", protect, getMyProjects);
+
 
 // Create a project
 router.post("/", protect, createProject);

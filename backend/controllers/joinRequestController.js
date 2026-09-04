@@ -1,6 +1,30 @@
 const JoinRequest = require("../models/JoinRequest");
 const Project = require("../models/Project");
 
+const getReceivedRequests = async (req, res) => {
+  try {
+    const myProjects = await Project.find({
+      owner: req.user.id,
+    }).select("_id");
+
+    const projectIds = myProjects.map((p) => p._id);
+
+   const requests = await JoinRequest.find({
+  project: { $in: projectIds },
+  status: "Pending",
+})
+      .populate("applicant", "fullName email")
+      .populate("project", "title");
+
+    res.json(requests);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
+
 const sendJoinRequest = async (req, res) => {
   try {
     const { projectId, message } = req.body;
@@ -93,7 +117,6 @@ const sendJoinRequest = async (req, res) => {
   }
 };
 
-
 const acceptJoinRequest = async (req, res) => {
   try {
     const requestId = req.params.id;
@@ -113,6 +136,24 @@ const acceptJoinRequest = async (req, res) => {
       });
     }
 
+    // Don't accept twice
+    if (request.status === "Accepted") {
+      console.log("Status:", request.status);
+      return res.status(400).json({
+        
+        message: "Request already accepted",
+      });
+    }
+
+    const project = await Project.findById(request.project._id);
+
+    // Add applicant to members if not already present
+    if (!project.members.includes(request.applicant)) {
+      project.members.push(request.applicant);
+      project.currentMembers += 1;
+      await project.save();
+    }
+
     request.status = "Accepted";
     await request.save();
 
@@ -129,6 +170,7 @@ const acceptJoinRequest = async (req, res) => {
     });
   }
 };
+
 
 const rejectJoinRequest = async (req, res) => {
   try {
@@ -194,4 +236,5 @@ module.exports = {
   acceptJoinRequest,
   rejectJoinRequest,
   getMyJoinRequests,
+  getReceivedRequests,
 };

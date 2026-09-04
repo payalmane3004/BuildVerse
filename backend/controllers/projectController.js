@@ -25,13 +25,15 @@ const createProject = async (req, res) => {
     }
 
     const project = await Project.create({
-      title,
-      description,
-      techStack,
-      requiredSkills,
-      teamSize,
-      owner: req.user.id,
-    });
+  title,
+  description,
+  techStack,
+  requiredSkills,
+  teamSize,
+  owner: req.user.id,
+  members: [req.user.id],
+  currentMembers: 1,
+});
 
     res.status(201).json({
       message: "Project created successfully",
@@ -49,15 +51,43 @@ const createProject = async (req, res) => {
 
 const getAllProjects = async (req, res) => {
   try {
-    const search = req.query.search || "";
+    const {
+      search = "",
+      status,
+      teamSize,
+      techStack,
+    } = req.query;
 
-    const projects = await Project.find({
-      $or: [
+    let query = {};
+
+    // Search
+    if (search) {
+      query.$or = [
         { title: { $regex: search, $options: "i" } },
         { techStack: { $regex: search, $options: "i" } },
-        { requiredSkills: { $regex: search, $options: "i" } }
-      ]
-    })
+        { requiredSkills: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // Status filter
+    if (status) {
+      query.status = status;
+    }
+
+    // Team Size filter
+    if (teamSize) {
+      query.teamSize = Number(teamSize);
+    }
+
+    // Tech Stack filter
+    if (techStack) {
+      query.techStack = {
+        $regex: techStack,
+        $options: "i",
+      };
+    }
+
+    const projects = await Project.find(query)
       .populate("owner", "fullName email")
       .sort({ createdAt: -1 });
 
@@ -72,22 +102,22 @@ const getAllProjects = async (req, res) => {
   }
 };
 
+
+
+
 const getMyProjects = async (req, res) => {
   try {
+    console.log("Logged in user:", req.user.id);
+
     const projects = await Project.find({
       owner: req.user.id,
-    })
-      .populate("owner", "fullName email")
-      .sort({ createdAt: -1 });
-
-    res.status(200).json(projects);
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: "Server Error",
     });
+
+    console.log("Projects found:", projects);
+
+    res.json(projects);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -95,8 +125,10 @@ const getMyProjects = async (req, res) => {
 const getProjectById = async (req, res) => {
   try {
     const projectId = req.params.id;
-   const project = await Project.findById(projectId)
-     .populate("owner", "fullName email college github")
+const project = await Project.findById(projectId)
+  .populate("owner", "fullName email college github")
+  .populate("members", "fullName email");
+  console.log(project);
     if(!project) {
         return res.status(404).json({
     message: "Project not found"

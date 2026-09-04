@@ -8,11 +8,14 @@ const {
   acceptJoinRequest,
   rejectJoinRequest,
   getMyJoinRequests,
-} = require("../controllers/joinRequestController");
+  getReceivedRequests,
+} = require("../controllers/joinRequestController");;
 
 router.post("/", protect, sendJoinRequest);
 
 router.get("/my", protect, getMyJoinRequests);
+
+router.get("/received", protect, getReceivedRequests);
 
 router.get("/project/:projectId", protect, getProjectRequests);
 

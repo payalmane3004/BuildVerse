@@ -35,6 +35,12 @@ const projectSchema = new mongoose.Schema(
       default: 1,
     },
 
+       members: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+],
     status: {
       type: String,
       enum: ["Open", "Closed"],
@@ -46,6 +52,9 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+
+
   },
   {
     timestamps: true,

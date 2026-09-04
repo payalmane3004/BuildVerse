@@ -5,7 +5,15 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     console.log(req.body);
-    const { fullName, email, password } = req.body;
+    const {
+  fullName,
+  email,
+  password,
+  college,
+  year,
+  bio,
+  skills,
+} = req.body;
 
     // Check if all fields are provided
     if (!fullName || !email || !password) {
@@ -28,10 +36,14 @@ const register = async (req, res) => {
 
     // Create new user
     const newUser = await User.create({
-      fullName,
-      email,
-      password: hashedPassword,
-    });
+  fullName,
+  email,
+  password: hashedPassword,
+  college: college || "",
+  year: year || undefined,
+  bio: bio || "",
+  skills: skills || [],
+});
 
     res.status(201).json({
       message: "User registered successfully",
